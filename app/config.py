@@ -16,7 +16,7 @@ class LocalConfig(Config):
     SQLALCHEMY_ECHO = True
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = (
-        "postgresql+psycopg2://root:1234@localhost:5432/elysia"
+        "postgresql+psycopg2://postgres:password@localhost:5432/elysia"
     )
 
 
