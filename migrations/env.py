@@ -9,6 +9,9 @@ from alembic import context
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
+from app.persistence.model.auth_model import AuthModel
+from app.persistence.model.user_model import UserModel
+
 config = context.config
 
 # Interpret the config file for Python logging.
@@ -25,6 +28,7 @@ config.set_main_option(
     current_app.config.get("SQLALCHEMY_DATABASE_URI").replace("%", "%%"),
 )
 target_metadata = current_app.extensions["migrate"].db.metadata
+
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
