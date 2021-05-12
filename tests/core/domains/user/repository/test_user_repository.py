@@ -6,10 +6,3 @@ def test_when_user_signup_then_success(session):
     password = "test_password"
 
     assert UserRepository().signup(nickname=nickname, password=password)
-
-
-def test_when_user_signup_then_success(session):
-    nickname = "test_nickname"
-    password = "test_password"
-
-    assert UserRepository().signup(nickname=nickname, password=password)
