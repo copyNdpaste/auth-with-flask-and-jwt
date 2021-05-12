@@ -3,10 +3,7 @@ from typing import Union
 from app.extensions.utils.log_helper import logger_
 from app.http.responses import failure_response, success_response
 
-from core.domains.user.dto import (
-    UseCaseSuccessOutput,
-    UseCaseFailureOutput,
-)
+from core.use_case_output import UseCaseSuccessOutput, UseCaseFailureOutput
 
 logger = logger_.getLogger(__name__)
 

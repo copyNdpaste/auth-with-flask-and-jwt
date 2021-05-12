@@ -1,8 +1,8 @@
 import inject
 
-from core.domains.user.dto import UseCaseSuccessOutput
 from core.domains.user.dto.user_dto import SignupDto
 from core.domains.user.repository.user_repository import UserRepository
+from core.use_case_output import FailureType, UseCaseFailureOutput, UseCaseSuccessOutput
 
 
 class SignupUseCase:
@@ -11,6 +11,9 @@ class SignupUseCase:
         self.__user_repo = user_repo
 
     def execute(self, dto: SignupDto):
-        user = self.__user_repo.signup(nickname=dto.nickname, password=dto.password)
+        result = self.__user_repo.signup(nickname=dto.nickname, password=dto.password)
 
-        return UseCaseSuccessOutput(value=user)
+        if not result:
+            return UseCaseFailureOutput(type=FailureType.INSERT_ERROR)
+
+        return UseCaseSuccessOutput(value=result)
