@@ -6,7 +6,7 @@ from app.persistence.model.user_model import UserModel
 
 
 class UserRepository:
-    def signup(self, nickname: str, password: str) -> UserModel:
+    def signup(self, nickname: str, password: str) -> bool:
         # TODO : try except, test
         encrypted_password = self.__encrypt_password(password=password)
         user = UserModel(
@@ -19,7 +19,7 @@ class UserRepository:
         session.add(user)
         session.commit()
 
-        return user
+        return True
 
     def __encrypt_password(self, password: str) -> bytes:
         return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
