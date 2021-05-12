@@ -23,7 +23,7 @@ class SignupRequest:
             SignupSchema(nickname=self.nickname, password=self.password)
             return self.to_dto()
         except ValidationError as e:
-            logger.error(f"[GetPostRequest][validate_request_and_make_dto] error : {e}")
+            logger.error(f"[SignupRequest][validate_request_and_make_dto] error : {e}")
             return False
 
     def to_dto(self) -> SignupDto:
