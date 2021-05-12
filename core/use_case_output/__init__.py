@@ -36,5 +36,5 @@ class FailureType:
     UNAUTHORIZED_ERROR = "unauthorized_error"
     INTERNAL_ERROR = "internal_error"
     NOT_FOUND_ERROR = "not_found_error"
-    SYSTEM_ERROR = "system_error"
+    INSERT_ERROR = "insert_error"
     ALREADY_EXIST = "already_exist"
