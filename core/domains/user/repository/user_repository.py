@@ -7,6 +7,7 @@ from app.persistence.model.user_model import UserModel
 
 class UserRepository:
     def signup(self, nickname: str, password: str) -> UserModel:
+        # TODO : try except, test
         encrypted_password = self.__encrypt_password(password=password)
         user = UserModel(
             nickname=nickname,
