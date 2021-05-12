@@ -1,5 +1,4 @@
 import os
-
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
@@ -37,7 +36,10 @@ def create_app(config_name: str = "default") -> Flask:
     ):
         config_name = os.environ.get("FLASK_CONFIG")
 
-    init_config(app, config_name)
+    init_config(
+        app,
+        config_name,
+    )
 
     with app.app_context():
         init_blueprint(app)
