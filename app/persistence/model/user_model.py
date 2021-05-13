@@ -23,6 +23,7 @@ class UserModel(db.Model):
     def to_entity(self) -> UserEntity:
         return UserEntity(
             id=self.id,
+            password=None,
             nickname=self.nickname,
             created_at=self.created_at,
             updated_at=self.updated_at,
