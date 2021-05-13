@@ -33,4 +33,23 @@ class AuthRepository:
             return True
         except Exception as e:
             logger.error(f"[AuthRepository][create_auth] error : {e}")
+            session.rollback()
+            return False
+
+    def update_auth(
+        self,
+        user_id: int,
+        identification: str,
+    ) -> bool:
+        try:
+            session.query(AuthModel).filter_by(
+                user_id=user_id, identification=identification
+            ).update({"is_verified": True})
+
+            session.commit()
+
+            return True
+        except Exception as e:
+            logger.error(f"[AuthRepository][update_auth] error : {e}")
+            session.rollback()
             return False
