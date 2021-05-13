@@ -1,5 +1,5 @@
-from sqlalchemy import func
+from datetime import datetime
 
 
-def get_utc_timestamp_for_model() -> func:
-    return func.timezone("UTC", func.current_timestamp())
+def get_utc_timestamp():
+    return datetime.utcnow()

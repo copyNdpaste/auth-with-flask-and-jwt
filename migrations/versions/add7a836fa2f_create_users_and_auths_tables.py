@@ -1,8 +1,8 @@
 """create users and auths tables
 
-Revision ID: 9a18a70c5eec
+Revision ID: add7a836fa2f
 Revises: 
-Create Date: 2021-05-12 00:24:55.603288
+Create Date: 2021-05-12 23:49:00.698743
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = "9a18a70c5eec"
+revision = "add7a836fa2f"
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,18 +24,8 @@ def upgrade():
         ),
         sa.Column("password", sa.String(length=100), nullable=False),
         sa.Column("nickname", sa.String(length=50), nullable=False),
-        sa.Column(
-            "created_at",
-            sa.DateTime(),
-            server_default=sa.text("timezone('UTC', CURRENT_TIMESTAMP)"),
-            nullable=False,
-        ),
-        sa.Column(
-            "updated_at",
-            sa.DateTime(),
-            server_default=sa.text("timezone('UTC', CURRENT_TIMESTAMP)"),
-            nullable=False,
-        ),
+        sa.Column("created_at", sa.DateTime(), nullable=False),
+        sa.Column("updated_at", sa.DateTime(), nullable=False),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_table(
@@ -49,18 +39,8 @@ def upgrade():
         sa.Column("verify_code", sa.String(length=50), nullable=False),
         sa.Column("is_verified", sa.Boolean(), nullable=True),
         sa.Column("expired_at", sa.DateTime(), nullable=False),
-        sa.Column(
-            "created_at",
-            sa.DateTime(),
-            server_default=sa.text("timezone('UTC', CURRENT_TIMESTAMP)"),
-            nullable=False,
-        ),
-        sa.Column(
-            "updated_at",
-            sa.DateTime(),
-            server_default=sa.text("timezone('UTC', CURRENT_TIMESTAMP)"),
-            nullable=False,
-        ),
+        sa.Column("created_at", sa.DateTime(), nullable=False),
+        sa.Column("updated_at", sa.DateTime(), nullable=False),
         sa.ForeignKeyConstraint(
             ["user_id"],
             ["users.id"],

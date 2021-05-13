@@ -7,9 +7,10 @@ from sqlalchemy import (
     String,
     Boolean,
 )
+from sqlalchemy.orm import relationship, backref
 
 from app import db
-from app.extensions.utils.time_helper import get_utc_timestamp_for_model
+from app.extensions.utils.time_helper import get_utc_timestamp
 from app.persistence.model.user_model import UserModel
 
 
@@ -21,9 +22,7 @@ class AuthModel(db.Model):
     verify_code = Column(String(50), nullable=False)
     is_verified = Column(Boolean)
     expired_at = Column(DateTime, nullable=False)
-    created_at = Column(
-        DateTime, server_default=get_utc_timestamp_for_model(), nullable=False
-    )
-    updated_at = Column(
-        DateTime, server_default=get_utc_timestamp_for_model(), nullable=False
-    )
+    created_at = Column(DateTime, default=get_utc_timestamp(), nullable=False)
+    updated_at = Column(DateTime, default=get_utc_timestamp(), nullable=False)
+
+    auth = relationship("UserModel", backref=backref("auth"))
