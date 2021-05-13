@@ -13,6 +13,8 @@ from app import db
 from app.extensions.utils.time_helper import get_utc_timestamp
 from app.persistence.model.user_model import UserModel
 
+from core.domains.auth.entity.auth_entity import AuthEntity
+
 
 class AuthModel(db.Model):
     id = Column(BigInteger().with_variant(Integer, "sqlite"), primary_key=True)
@@ -25,4 +27,17 @@ class AuthModel(db.Model):
     created_at = Column(DateTime, default=get_utc_timestamp(), nullable=False)
     updated_at = Column(DateTime, default=get_utc_timestamp(), nullable=False)
 
-    auth = relationship("UserModel", backref=backref("auth"))
+    user = relationship("UserModel", backref=backref("auth"))
+
+    def to_entity(self) -> AuthEntity:
+        return AuthEntity(
+            id=self.id,
+            user_id=self.user_id,
+            identification=self.identification,
+            type=self.type,
+            verify_code=self.verify_code,
+            is_verified=self.is_verified,
+            expired_at=self.expired_at,
+            created_at=self.created_at,
+            updated_at=self.updated_at,
+        )
