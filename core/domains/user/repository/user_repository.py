@@ -1,9 +1,12 @@
 import bcrypt
+from typing import Union
 
 from app.extensions.database import session
 from app.extensions.utils.log_helper import logger_
 from app.extensions.utils.time_helper import get_utc_timestamp
 from app.persistence.model.user_model import UserModel
+
+from core.domains.user.entity.user_entity import UserEntity
 
 logger = logger_.getLogger(__name__)
 
@@ -29,3 +32,12 @@ class UserRepository:
 
     def __encrypt_password(self, password: str) -> bytes:
         return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
+
+    def get_user(self, user_id: int) -> Union[UserEntity, bool]:
+        try:
+            user = session.query(UserModel).filter_by(id=user_id).first()
+
+            return user.to_entity() if user else None
+        except Exception as e:
+            logger.error(f"[UserRepository][get_user] error : {e}")
+            return False
