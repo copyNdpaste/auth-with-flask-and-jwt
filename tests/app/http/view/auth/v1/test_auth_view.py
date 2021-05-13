@@ -3,6 +3,7 @@ from datetime import timedelta
 from flask import url_for
 
 from app.extensions.utils.time_helper import get_utc_timestamp
+
 from core.domains.user.repository.auth_repository import AuthRepository
 from core.domains.user.repository.user_repository import UserRepository
 
