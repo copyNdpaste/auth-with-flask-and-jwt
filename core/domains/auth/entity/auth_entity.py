@@ -1,6 +1,8 @@
 from datetime import datetime
 from pydantic import BaseModel
 
+from core.domains.user.entity.user_entity import UserEntity
+
 
 class AuthEntity(BaseModel):
     id: int = None
@@ -12,3 +14,4 @@ class AuthEntity(BaseModel):
     expired_at: datetime = None
     created_at: datetime = None
     updated_at: datetime = None
+    user: UserEntity = None
