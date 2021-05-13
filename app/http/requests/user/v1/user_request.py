@@ -1,5 +1,5 @@
 from pydantic import ValidationError
-from pydantic.main import BaseModel
+from pydantic import BaseModel
 
 from app.extensions.utils.log_helper import logger_
 
