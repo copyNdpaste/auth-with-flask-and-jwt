@@ -8,6 +8,8 @@ from sqlalchemy import (
 from app import db
 from app.extensions.utils.time_helper import get_utc_timestamp
 
+from core.domains.user.entity.user_entity import UserEntity
+
 
 class UserModel(db.Model):
     __tablename__ = "users"
@@ -18,12 +20,11 @@ class UserModel(db.Model):
     created_at = Column(DateTime, default=get_utc_timestamp(), nullable=False)
     updated_at = Column(DateTime, default=get_utc_timestamp(), nullable=False)
 
-    # def to_entity(self) -> UserEntity:
-    #     return UserEntity(
-    #         id=self.id,
-    #         password=self.password,
-    #         nickname=self.nickname,
-    #         created_at=self.created_at,
-    #         updated_at=self.updated_at,
-    #         auth=self.auth,
-    #     )
+    def to_entity(self) -> UserEntity:
+        return UserEntity(
+            id=self.id,
+            password=None,
+            nickname=self.nickname,
+            created_at=self.created_at,
+            updated_at=self.updated_at,
+        )
