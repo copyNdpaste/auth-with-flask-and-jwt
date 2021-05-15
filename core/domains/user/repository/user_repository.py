@@ -60,13 +60,16 @@ class UserRepository:
             logger.error(f"[UserRepository][signin] error : {e}")
             return False
 
-    def update_user(self, user_id: int, nickname: str, password: str) -> bool:
+    def update_user(
+        self, user_id: int, nickname: str = None, password: str = None
+    ) -> bool:
+        dct = {}
+        if nickname:
+            dct["nickname"] = nickname
+        if password:
+            dct["password"] = password
         try:
-            return (
-                session.query(UserModel)
-                .filter_by(id=user_id)
-                .update({"nickname": nickname, "password": password})
-            )
+            return session.query(UserModel).filter_by(id=user_id).update(dct)
         except Exception as e:
             logger.error(f"[UserRepository][update_user] error : {e}")
             session.rollback()
