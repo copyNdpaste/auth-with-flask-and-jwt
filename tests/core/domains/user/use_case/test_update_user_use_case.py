@@ -20,6 +20,14 @@ from core.use_case_output import FailureType, UseCaseSuccessOutput
         ("test_nickname", None, "test_password", "test_password", "new_password", True),
         (
             "test_nickname",
+            "test_nickname",
+            "test_password",
+            "test_password",
+            "new_password",
+            FailureType.INVALID_REQUEST_ERROR,
+        ),
+        (
+            "test_nickname",
             None,
             "test_password",
             "test_passwor",
@@ -79,3 +87,10 @@ def test_when_update_user(
         assert user.nickname is not None
     else:
         assert output.type == result
+
+
+def test_when_not_exist_update_user_then_not_found(session):
+    dto = UpdateUserDto(user_id=0)
+
+    output = UpdateUserUseCase().execute(dto=dto)
+    output.type = FailureType.NOT_FOUND_ERROR

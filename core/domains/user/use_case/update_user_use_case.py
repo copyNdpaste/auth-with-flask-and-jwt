@@ -15,6 +15,9 @@ class UpdateUserUseCase:
         if not user:
             return UseCaseFailureOutput(type=FailureType.NOT_FOUND_ERROR)
 
+        if dto.nickname == dto.new_nickname:
+            return UseCaseFailureOutput(type=FailureType.INVALID_REQUEST_ERROR)
+
         if dto.current_password != dto.current_password_check:
             return UseCaseFailureOutput(type=FailureType.INVALID_REQUEST_ERROR)
 
