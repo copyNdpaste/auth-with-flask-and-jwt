@@ -16,5 +16,5 @@ class UpdateUserDto(BaseModel):
     nickname: str = None
     new_nickname: str = None
     current_password: str = None
-    current_password_check: str = None
     new_password: str = None
+    new_password_check: str = None

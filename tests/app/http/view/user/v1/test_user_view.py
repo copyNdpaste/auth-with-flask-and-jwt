@@ -46,7 +46,7 @@ def test_when_update_user_then_success(
     authorization = "Bearer " + create_access_token(identity=1)
     headers = make_header(authorization=authorization)
 
-    dct = dict(nickname=nickname)
+    dct = dict(new_nickname="new_nickname")
 
     with test_request_context:
         response = client.put(

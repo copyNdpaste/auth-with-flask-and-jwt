@@ -7,85 +7,71 @@ from core.use_case_output import FailureType, UseCaseSuccessOutput
 
 
 @pytest.mark.parametrize(
-    "nickname, new_nickname, current_password, current_password_check, new_password, result",
+    "new_nickname, current_password, new_password, new_password_check, result, msg",
     [
+        # update : nickname, password
+        ("new_nickname", "test_password", "new_password", "new_password", True, None),
+        # update: password
+        (None, "test_password", "new_password", "new_password", True, None),
         (
             "test_nickname",
-            "new_nickname",
-            "test_password",
             "test_password",
             "new_password",
-            True,
-        ),
-        ("test_nickname", None, "test_password", "test_password", "new_password", True),
-        (
-            "test_nickname",
-            "test_nickname",
-            "test_password",
-            "test_password",
             "new_password",
             FailureType.INVALID_REQUEST_ERROR,
+            "nickname unchanged",
         ),
         (
-            "test_nickname",
             None,
             "test_password",
+            "new_passwor",
+            "new_password",
+            FailureType.INVALID_REQUEST_ERROR,
+            "new password checking failed",
+        ),
+        (
+            None,
             "test_passwor",
             "new_password",
-            FailureType.INVALID_REQUEST_ERROR,
-        ),
-        (
-            "test_nickname",
-            None,
-            "test_passwor",
-            "test_password",
             "new_password",
             FailureType.INVALID_REQUEST_ERROR,
+            "current password checking failed",
         ),
         (
-            "test_nickname",
             None,
             "test_password",
             "test_password",
             "test_password",
             FailureType.INVALID_REQUEST_ERROR,
-        ),
-        (
-            "test_nickname",
-            None,
-            "test_passwor",
-            "test_password",
-            None,
-            FailureType.INVALID_REQUEST_ERROR,
+            "password unchanged",
         ),
         (
             None,
             None,
             None,
             None,
-            None,
             FailureType.INVALID_REQUEST_ERROR,
+            "no input parameter",
         ),
     ],
 )
 def test_when_update_user(
     session,
-    nickname,
     new_nickname,
     current_password,
-    current_password_check,
     new_password,
+    new_password_check,
     result,
+    msg,
 ):
-    UserRepository().signup(nickname=nickname, password=current_password)
+    UserRepository().signup(nickname="test_nickname", password="test_password")
 
     dto = UpdateUserDto(
         user_id=1,
-        nickname=nickname,
         new_nickname=new_nickname,
         current_password=current_password,
-        current_password_check=current_password_check,
         new_password=new_password,
+        new_password_check=new_password_check,
     )
 
     output = UpdateUserUseCase().execute(dto=dto)
@@ -95,6 +81,9 @@ def test_when_update_user(
         assert user.nickname is not None
     else:
         assert output.type == result
+
+    if msg:
+        assert output.message == msg
 
 
 def test_when_not_exist_update_user_then_not_found(session):
