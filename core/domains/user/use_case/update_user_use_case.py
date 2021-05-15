@@ -11,6 +11,15 @@ class UpdateUserUseCase:
         self.__user_repo = user_repo
 
     def execute(self, dto: UpdateUserDto):
+        if (
+            not dto.nickname
+            and not dto.new_nickname
+            and not dto.current_password
+            and not dto.current_password_check
+            and not dto.new_password
+        ):
+            return UseCaseFailureOutput(type=FailureType.INVALID_REQUEST_ERROR)
+
         user = self.__user_repo.get_user(user_id=dto.user_id)
         if not user:
             return UseCaseFailureOutput(type=FailureType.NOT_FOUND_ERROR)

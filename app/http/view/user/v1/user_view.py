@@ -47,6 +47,10 @@ def signin_view():
 @jwt_required()
 @auth_required
 def update_user_view(user_id):
+    if user_id != current_user.id:
+        return failure_response(
+            UseCaseFailureOutput(type=FailureType.UNAUTHORIZED_ERROR)
+        )
     dto = UpdateUserRequest(
         **request.get_json(), user_id=current_user.id
     ).validate_request_and_make_dto()
