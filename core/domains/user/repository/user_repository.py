@@ -48,7 +48,6 @@ class UserRepository:
 
     def signin(self, nickname: str, password: str) -> Union[UserEntity, bool]:
         try:
-
             user = session.query(UserModel).filter_by(nickname=nickname).first()
 
             if user:
