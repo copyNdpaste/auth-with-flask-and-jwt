@@ -53,6 +53,14 @@ from core.use_case_output import FailureType, UseCaseSuccessOutput
             FailureType.INVALID_REQUEST_ERROR,
             "no input parameter",
         ),
+        (
+            None,
+            None,
+            "new_password",
+            "new_password",
+            FailureType.INVALID_REQUEST_ERROR,
+            "current password not delivered",
+        ),
     ],
 )
 def test_when_update_user(

@@ -41,8 +41,12 @@ class UpdateUserUseCase:
                 message="new password checking failed",
             )
 
-        if dto.new_password and not self.__user_repo.check_password(
-            user_id=dto.user_id, input_password=dto.current_password
+        if (
+            dto.current_password
+            and dto.new_password
+            and not self.__user_repo.check_password(
+                user_id=dto.user_id, input_password=dto.current_password
+            )
         ):
             return UseCaseFailureOutput(
                 type=FailureType.INVALID_REQUEST_ERROR,
@@ -60,8 +64,14 @@ class UpdateUserUseCase:
                 message="new password not delivered",
             )
 
+        if not dto.current_password and dto.new_password:
+            return UseCaseFailureOutput(
+                type=FailureType.INVALID_REQUEST_ERROR,
+                message="current password not delivered",
+            )
+
         user = self.__user_repo.update_user(
-            user_id=dto.user_id, nickname=dto.nickname, password=dto.new_password
+            user_id=dto.user_id, nickname=dto.new_nickname, password=dto.new_password
         )
 
         if not user:
