@@ -1,8 +1,8 @@
 """create users and auths tables
 
-Revision ID: add7a836fa2f
+Revision ID: cb6b7b529969
 Revises: 
-Create Date: 2021-05-12 23:49:00.698743
+Create Date: 2021-05-15 11:26:08.258361
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = "add7a836fa2f"
+revision = "cb6b7b529969"
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,6 +27,7 @@ def upgrade():
         sa.Column("created_at", sa.DateTime(), nullable=False),
         sa.Column("updated_at", sa.DateTime(), nullable=False),
         sa.PrimaryKeyConstraint("id"),
+        sa.UniqueConstraint("nickname"),
     )
     op.create_table(
         "auth_model",
