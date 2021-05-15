@@ -55,6 +55,7 @@ class AuthRepository:
         auth = (
             session.query(AuthModel)
             .filter_by(user_id=user_id, identification=identification)
+            .order_by(AuthModel.id.desc())
             .first()
         )
 
