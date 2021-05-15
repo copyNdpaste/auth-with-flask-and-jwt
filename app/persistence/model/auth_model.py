@@ -17,6 +17,8 @@ from core.domains.auth.entity.auth_entity import AuthEntity
 
 
 class AuthModel(db.Model):
+    __tablename__ = "auths"
+
     id = Column(BigInteger().with_variant(Integer, "sqlite"), primary_key=True)
     user_id = Column(BigInteger, ForeignKey(UserModel.id), nullable=False)
     identification = Column(String(50), nullable=False)
