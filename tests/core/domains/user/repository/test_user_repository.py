@@ -41,3 +41,18 @@ def test_user_signin_with_incorrect_nickname_then_fail(session):
     result = UserRepository().signin(nickname="nick", password=password)
 
     assert result == False
+
+
+def test_user_update_user_info_then_success(session):
+    nickname = "test_nickname"
+    password = "test_password"
+
+    UserRepository().signup(nickname=nickname, password=password)
+
+    assert UserRepository().update_user(user_id=1, nickname="nick", password=password)
+
+
+def test_not_exist_user_update_user_info_then_fail(session):
+    assert (
+        UserRepository().update_user(user_id=0, nickname="nick", password="1234") == 0
+    )

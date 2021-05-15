@@ -59,3 +59,15 @@ class UserRepository:
         except Exception as e:
             logger.error(f"[UserRepository][signin] error : {e}")
             return False
+
+    def update_user(self, user_id: int, nickname: str, password: str) -> bool:
+        try:
+            return (
+                session.query(UserModel)
+                .filter_by(id=user_id)
+                .update({"nickname": nickname, "password": password})
+            )
+        except Exception as e:
+            logger.error(f"[UserRepository][update_user] error : {e}")
+            session.rollback()
+            return False
