@@ -64,9 +64,11 @@ class UserRepository:
         if nickname:
             dct["nickname"] = nickname
         if password:
-            dct["password"] = password
+            dct["password"] = self.__encrypt_password(password=password)
         try:
-            return session.query(UserModel).filter_by(id=user_id).update(dct)
+            result = session.query(UserModel).filter_by(id=user_id).update(dct)
+            session.commit()
+            return result
         except Exception as e:
             logger.error(f"[UserRepository][update_user] error : {e}")
             session.rollback()

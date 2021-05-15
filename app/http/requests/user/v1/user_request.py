@@ -68,15 +68,15 @@ class UpdateUserRequest:
         nickname: str = None,
         new_nickname: str = None,
         current_password: str = None,
-        current_password_check: str = None,
         new_password: str = None,
+        new_password_check: str = None,
     ):
         self.user_id = int(user_id) if user_id else None
         self.nickname = nickname or None
         self.new_nickname = new_nickname or None
         self.current_password = current_password or None
-        self.current_password_check = current_password_check or None
         self.new_password = new_password or None
+        self.new_password_check = new_password_check or None
 
     def validate_request_and_make_dto(self):
         try:
@@ -85,8 +85,8 @@ class UpdateUserRequest:
                 nickname=self.nickname,
                 new_nickname=self.new_nickname,
                 current_password=self.current_password,
-                current_password_check=self.current_password_check,
                 new_password=self.new_password,
+                new_password_check=self.new_password_check,
             )
             return self.to_dto()
         except ValidationError as e:
@@ -101,6 +101,6 @@ class UpdateUserRequest:
             nickname=self.nickname,
             new_nickname=self.new_nickname,
             current_password=self.current_password,
-            current_password_check=self.current_password_check,
             new_password=self.new_password,
+            new_password_check=self.new_password_check,
         )
