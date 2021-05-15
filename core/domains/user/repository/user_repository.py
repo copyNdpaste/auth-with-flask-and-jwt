@@ -31,7 +31,11 @@ class UserRepository:
             return False
 
     def __encrypt_password(self, password: str) -> bytes:
-        return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
+        encoded_password = self.__encode_password(password=password)
+        return bcrypt.hashpw(encoded_password, bcrypt.gensalt())
+
+    def __encode_password(self, password: str, type_: str = "utf-8") -> bytes:
+        return password.encode(type_)
 
     def get_user(self, user_id: int) -> Union[UserEntity, bool]:
         try:
@@ -40,4 +44,18 @@ class UserRepository:
             return user.to_entity() if user else None
         except Exception as e:
             logger.error(f"[UserRepository][get_user] error : {e}")
+            return False
+
+    def signin(self, nickname: str, password: str) -> Union[UserEntity, bool]:
+        try:
+            user = session.query(UserModel).filter_by(nickname=nickname).first()
+
+            if user:
+                encoded_password = self.__encode_password(password=password)
+                encrypted_password = user.password
+                if bcrypt.checkpw(encoded_password, encrypted_password):
+                    return user.to_entity()
+            return False
+        except Exception as e:
+            logger.error(f"[UserRepository][signin] error : {e}")
             return False
