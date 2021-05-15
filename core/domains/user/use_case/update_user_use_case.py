@@ -21,7 +21,7 @@ class UpdateUserUseCase:
         if dto.current_password != dto.current_password_check:
             return UseCaseFailureOutput(type=FailureType.INVALID_REQUEST_ERROR)
 
-        if dto.new_password == dto.current_password:
+        if dto.new_password and dto.new_password == dto.current_password:
             return UseCaseFailureOutput(type=FailureType.INVALID_REQUEST_ERROR)
 
         if dto.current_password and not dto.new_password:

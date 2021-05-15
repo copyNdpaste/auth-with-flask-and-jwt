@@ -58,6 +58,14 @@ from core.use_case_output import FailureType, UseCaseSuccessOutput
             None,
             FailureType.INVALID_REQUEST_ERROR,
         ),
+        (
+            None,
+            None,
+            None,
+            None,
+            None,
+            FailureType.INVALID_REQUEST_ERROR,
+        ),
     ],
 )
 def test_when_update_user(
