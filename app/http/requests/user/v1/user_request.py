@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 from app.extensions.utils.log_helper import logger_
 
-from core.domains.user.dto.user_dto import SignupDto
+from core.domains.user.dto.user_dto import SignupDto, SigninDto
 
 logger = logger_.getLogger(__name__)
 
@@ -28,3 +28,25 @@ class SignupRequest:
 
     def to_dto(self) -> SignupDto:
         return SignupDto(nickname=self.nickname, password=self.password)
+
+
+class SigninSchema(BaseModel):
+    nickname: str = None
+    password: str = None
+
+
+class SigninRequest:
+    def __init__(self, nickname, password):
+        self.nickname = nickname
+        self.password = password
+
+    def validate_request_and_make_dto(self):
+        try:
+            SigninSchema(nickname=self.nickname, password=self.password)
+            return self.to_dto()
+        except ValidationError as e:
+            logger.error(f"[SigninRequest][validate_request_and_make_dto] error : {e}")
+            return False
+
+    def to_dto(self) -> SigninDto:
+        return SigninDto(nickname=self.nickname, password=self.password)
