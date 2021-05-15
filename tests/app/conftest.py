@@ -1,4 +1,5 @@
 import pytest
+from flask_jwt_extended import JWTManager
 
 
 @pytest.fixture()
@@ -26,3 +27,8 @@ def client(app):
 @pytest.fixture()
 def test_request_context(app):
     return app.test_request_context()
+
+
+@pytest.fixture()
+def jwt_manager(app):
+    return JWTManager(app)

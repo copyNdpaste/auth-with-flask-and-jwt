@@ -5,6 +5,8 @@ from sqlalchemy import (
     String,
     DateTime,
 )
+from sqlalchemy.dialects.postgresql import BYTEA
+
 from app import db
 from app.extensions.utils.time_helper import get_utc_timestamp
 
@@ -15,7 +17,7 @@ class UserModel(db.Model):
     __tablename__ = "users"
 
     id = Column(BigInteger().with_variant(Integer, "sqlite"), primary_key=True)
-    password = Column(String(100), nullable=False)
+    password = Column(BYTEA().with_variant(String(120), "sqlite"))
     nickname = Column(String(50), nullable=False, unique=True)
     created_at = Column(DateTime, default=get_utc_timestamp(), nullable=False)
     updated_at = Column(DateTime, default=get_utc_timestamp(), nullable=False)

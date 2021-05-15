@@ -50,12 +50,37 @@ class UserRepository:
         try:
             user = session.query(UserModel).filter_by(nickname=nickname).first()
 
-            if user:
-                encoded_password = self.__encode_password(password=password)
-                encrypted_password = user.password
-                if bcrypt.checkpw(encoded_password, encrypted_password):
-                    return user.to_entity()
+            if user and self.check_password(user_id=user.id, input_password=password):
+                return user.to_entity()
             return False
         except Exception as e:
             logger.error(f"[UserRepository][signin] error : {e}")
             return False
+
+    def update_user(
+        self, user_id: int, nickname: str = None, password: str = None
+    ) -> bool:
+        dct = {}
+        if nickname:
+            dct["nickname"] = nickname
+        if password:
+            dct["password"] = self.__encrypt_password(password=password)
+        try:
+            result = session.query(UserModel).filter_by(id=user_id).update(dct)
+            session.commit()
+            return result
+        except Exception as e:
+            logger.error(f"[UserRepository][update_user] error : {e}")
+            session.rollback()
+            return False
+
+    def check_password(self, user_id: int, input_password: str) -> bool:
+        # 현재 password, 입력된 현재 password 일치하는지 비교
+        user = session.query(UserModel).filter_by(id=user_id).first()
+
+        if user:
+            encoded_password = self.__encode_password(password=input_password)
+            encrypted_password = user.password
+            return (
+                True if bcrypt.checkpw(encoded_password, encrypted_password) else False
+            )
