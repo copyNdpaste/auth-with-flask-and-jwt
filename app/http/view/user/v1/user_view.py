@@ -7,8 +7,8 @@ from app.http.responses.presenters.user_presenter import (
     SigninPresenter,
 )
 from app.http.view import api
-from core.domains.user.use_case.signin_use_case import SigninUseCase
 
+from core.domains.user.use_case.signin_use_case import SigninUseCase
 from core.domains.user.use_case.signup_use_case import SignupUseCase
 from core.use_case_output import UseCaseFailureOutput, FailureType
 
