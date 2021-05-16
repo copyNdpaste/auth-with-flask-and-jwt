@@ -17,7 +17,7 @@ class UserModel(db.Model):
     __tablename__ = "users"
 
     id = Column(BigInteger().with_variant(Integer, "sqlite"), primary_key=True)
-    password = Column(BYTEA().with_variant(String(120), "sqlite"))
+    password = Column(BYTEA().with_variant(String(120), "sqlite"), nullable=False)
     nickname = Column(String(50), nullable=False, unique=True)
     created_at = Column(DateTime, default=get_utc_timestamp(), nullable=False)
     updated_at = Column(DateTime, default=get_utc_timestamp(), nullable=False)

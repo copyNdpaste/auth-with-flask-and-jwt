@@ -39,7 +39,7 @@ class CreateAuthUseCase:
         if not result:
             return UseCaseFailureOutput(type=FailureType.INSERT_ERROR)
 
-        self.__send_verify_code(type_=dto.type_)
+        self.__send_verify_code(type_=dto.type_, verify_code=dto.verify_code)
 
         return UseCaseSuccessOutput(value=result)
 
@@ -49,9 +49,14 @@ class CreateAuthUseCase:
     def __create_verify_code(self) -> str:
         return str(randrange(100000, 999999))
 
-    def __send_verify_code(self, type_: str) -> None:
+    def __send_verify_code(self, type_: str, verify_code: str) -> None:
         if type_ == VerifyWayEnum.EMAIL.value:
             ...
         elif type_ == VerifyWayEnum.SMS.value:
             ...
-        logger.info(f"[CreateAuthUseCase][execute] send verify_code by {type_}")
+        logger.info(
+            f"[CreateAuthUseCase][__send_verify_code] send verify_code by {type_}"
+        )
+        logger.info(
+            f"[CreateAuthUseCase][__send_verify_code] verify_code : {verify_code}"
+        )
